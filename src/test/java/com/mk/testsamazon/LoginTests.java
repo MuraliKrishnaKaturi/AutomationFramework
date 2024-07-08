@@ -33,16 +33,16 @@ public class LoginTests {
 	public void verify_if_login_page_is_displayed() {
 		common.hardAssert(login.verifyIfLoginPageDisplayed(), "Login page displayed successfully");
 	}
-	
+
 	@Then("Enter the {string} in text field")
 	public void enter_the_email_to_login(String string) {
 		common.hardAssert(login.enterTheTextInField(string), "Entered the " + string + " in respective field");
 	}
-	
+
 	@Then("Verify if password page is displayed")
 	public void verify_if_password_page_is_displayed() {
 		common.hardAssert(login.verifyIfPasswordPageDisplayed(), "Password page displayed successfully");
-		
+
 	}
 
 }

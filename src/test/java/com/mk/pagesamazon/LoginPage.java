@@ -24,21 +24,21 @@ public class LoginPage {
 	@FindBy(xpath = "//div[@id='nav-flyout-ya-signin']//span[text()='Sign in']")
 	private WebElement signInBtn;
 
-	@FindBy(xpath = "//input[@id='ap_email']//preceding::label")
+	@FindBy(xpath = "//input[@id='ap_email_login']//preceding::label")
 	private WebElement emailmobileLabel;
 
-	@FindBy(xpath = "//input[@id='ap_email']")
+	@FindBy(xpath = "//input[@id='ap_email_login']")
 	private WebElement emailmobileInputField;
 
 	@FindBy(xpath = "//input[@id='continue']")
 	private WebElement continueBtn;
-	
+
 	@FindBy(xpath = "//input[@id='ap_password']//preceding::label")
 	private WebElement passwordLabel;
 
 	@FindBy(xpath = "//input[@id='ap_password']")
 	private WebElement passwordInputField;
-	
+
 	public void loginToApplication() {
 
 		driver.get(common.getTheSpecifiedProperty("appliactionURL"));
@@ -49,7 +49,7 @@ public class LoginPage {
 		boolean flag = false;
 
 		try {
-			switch(btnName) {
+			switch (btnName) {
 			case "SignIn":
 				Actions action = new Actions(driver);
 				action.moveToElement(accountsHover).build().perform();
@@ -63,22 +63,23 @@ public class LoginPage {
 			default:
 				throw new Exception("Invalid Option");
 			}
-			
+
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 			common.resultStatus("FAIL", e.getMessage());
 		}
 
 		return flag;
 	}
-	
+
 	public boolean verifyIfLoginPageDisplayed() {
 		boolean flag = false;
 
 		try {
+			common.expectedConditions(emailmobileLabel, "Visibility", 30);
 			String emailLabel = emailmobileLabel.getText();
-			if(emailLabel.contains("Email or mobile phone number")) {
+			if (emailLabel.contains("Email or mobile phone number")) {
 				flag = true;
 			}
 		} catch (Exception e) {
@@ -87,14 +88,14 @@ public class LoginPage {
 		}
 
 		return flag;
-		
+
 	}
-	
+
 	public boolean enterTheTextInField(String boxName) {
 		boolean flag = false;
 
 		try {
-			switch(boxName) {
+			switch (boxName) {
 			case "Email":
 				emailmobileInputField.click();
 				emailmobileInputField.clear();
@@ -108,16 +109,16 @@ public class LoginPage {
 		}
 
 		return flag;
-		
+
 	}
-	
+
 	public boolean verifyIfPasswordPageDisplayed() {
 		boolean flag = false;
 
 		try {
 			common.expectedConditions(passwordLabel, "Visibility", 30);
 			String pwdLabel = passwordLabel.getText();
-			if(pwdLabel.contains("Password")) {
+			if (pwdLabel.contains("Password")) {
 				flag = true;
 			}
 		} catch (Exception e) {
@@ -126,7 +127,7 @@ public class LoginPage {
 		}
 
 		return flag;
-		
+
 	}
 
 }

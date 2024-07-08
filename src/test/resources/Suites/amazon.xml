@@ -7,5 +7,7 @@
 		<classes>
 			<class name="com.mk.runners.CucumberRunner" />
 		</classes>
-	</test> <!-- Test -->
-</suite> <!-- Suite -->
+	</test> <!--
+	Test -->
+</suite> <!--
+Suite -->
