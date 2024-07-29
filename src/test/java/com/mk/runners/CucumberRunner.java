@@ -11,7 +11,7 @@ import io.cucumber.testng.CucumberOptions;
 @Test
 @RunWith(Cucumber.class)
 @CucumberOptions(features = { "src/test/resources/Features/Web/Amazon" }, plugin = { "pretty",
-		"html:target/cucumber" }, glue = { "com/mk/testsamazon"}, monochrome= true, dryRun = false)
+		"html:target/cucumber" }, glue = { "com/mk/testsamazon" }, monochrome = true, dryRun = false)
 public class CucumberRunner extends DriverInitialisation {
 
 }

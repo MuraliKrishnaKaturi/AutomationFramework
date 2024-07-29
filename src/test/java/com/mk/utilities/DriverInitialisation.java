@@ -32,9 +32,9 @@ public class DriverInitialisation extends AbstractTestNGCucumberTests {
 	public static ExtentSparkReporter sprkRep;
 	public static ExtentReports extRep;
 	public static ExtentTest testRep;
-	
+
 	String repName;
-	
+
 	public WebDriver getDriver() {
 		return driver;
 	}
@@ -42,15 +42,15 @@ public class DriverInitialisation extends AbstractTestNGCucumberTests {
 	public void setDriver(WebDriver driver) {
 		DriverInitialisation.driver = driver;
 	}
-	
+
 	@Override
 	@BeforeClass(alwaysRun = true)
-    public void setUpClass(ITestContext context) {
-        XmlTest currentXmlTest = context.getCurrentXmlTest();
-        CucumberPropertiesProvider properties = currentXmlTest::getParameter;
-        testNGCucumberRunner = new TestNGCucumberRunner(this.getClass(), properties);
-        setDriver(setUpDriver(properties.get("BrowserName")));
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+	public void setUpClass(ITestContext context) {
+		XmlTest currentXmlTest = context.getCurrentXmlTest();
+		CucumberPropertiesProvider properties = currentXmlTest::getParameter;
+		testNGCucumberRunner = new TestNGCucumberRunner(this.getClass(), properties);
+		setDriver(setUpDriver(properties.get("BrowserName")));
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		repName = "Test-Report" + timeStamp + ".html";
 		sprkRep = new ExtentSparkReporter("./reports/" + repName);
 		sprkRep.config().setDocumentTitle("WebAutomationProject");
@@ -58,36 +58,36 @@ public class DriverInitialisation extends AbstractTestNGCucumberTests {
 		sprkRep.config().setTheme(Theme.DARK);
 		extRep = new ExtentReports();
 		extRep.attachReporter(sprkRep);
-    }
-	
+	}
+
 	@Override
 	@AfterClass(alwaysRun = true)
-    public void tearDownClass() {
-        if (testNGCucumberRunner == null) {
-            return;
-        }
-        driver.quit();
-        extRep.flush();
-        testNGCucumberRunner.finish();
-    }
-	
+	public void tearDownClass() {
+		if (testNGCucumberRunner == null) {
+			return;
+		}
+		driver.quit();
+		extRep.flush();
+		testNGCucumberRunner.finish();
+	}
+
 	@Override
 	@Test(groups = "cucumber", description = "Runs Cucumber Scenarios", dataProvider = "scenarios")
-    public void runScenario(PickleWrapper pickleWrapper, FeatureWrapper featureWrapper) {
-        // the 'featureWrapper' parameter solely exists to display the feature
-        // file in a test report
+	public void runScenario(PickleWrapper pickleWrapper, FeatureWrapper featureWrapper) {
+		// the 'featureWrapper' parameter solely exists to display the feature
+		// file in a test report
 		testRep = extRep.createTest(pickleWrapper.getPickle().getName());
 		testNGCucumberRunner.runScenario(pickleWrapper.getPickle());
-        testRep.createNode(pickleWrapper.getPickle().getName());
-    }
-	
+		testRep.createNode(pickleWrapper.getPickle().getName());
+	}
+
 	@DataProvider
-    public Object[][] scenarios() {
-        if (testNGCucumberRunner == null) {
-            return new Object[0][0];
-        }
-        return testNGCucumberRunner.provideScenarios();
-    }
+	public Object[][] scenarios() {
+		if (testNGCucumberRunner == null) {
+			return new Object[0][0];
+		}
+		return testNGCucumberRunner.provideScenarios();
+	}
 
 	public WebDriver setUpDriver(String BrowserName) {
 		switch (BrowserName) {
